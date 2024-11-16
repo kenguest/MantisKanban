@@ -1,7 +1,7 @@
 
 # Mantis Kanban plugin
  
-Version 2.2.1
+Version 2.2.2
 Copyright 2024 Cas Nuy
 
 ## Description
@@ -14,7 +14,7 @@ Released under the [GPL v3 license](http://opensource.org/licenses/GPL-3.0).
 
 ## Background
 
-This is based upon the original MantisKanban plugin which can be found here: https://github.com/thinksentient/MantisKanban
+This is based upon the original MantisKanban plugin which can be found here: https://github.com/mantisbt-plugins/MantisKanban/tree/MantisBT2.x
 Since the plugin is not maintained and didn't work for MantisBT version 2.x, I have updated it
 
 ## Requirements
@@ -25,6 +25,8 @@ Since the plugin is not maintained and didn't work for MantisBT version 2.x, I h
 
 *   Upload the "MantisKanban" folder to your Mantis "plugins" folder
 *   Activate the plugin in your Mantis backend
+*   Configure your board 
+*	Ready to roll
 
 ## Support
 
@@ -38,4 +40,5 @@ File bug reports and submit questions on the
 2024-03-22	Introduced combined overview option<br>
 2024-06-27	Made last fixed text string adjustable<br>
 2024-06-27	Added Dutch transalation, thanks to KoenR<br>
-2024-11-15      Added group edit function (thanks to Ken Guest)<br>
+2024-11-15  Added group edit function (thanks to Ken Guest)<br>
+2024-11-16	Added interactive changing of parameters and table borders<br>

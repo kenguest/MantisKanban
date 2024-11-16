@@ -2,30 +2,32 @@
 
 class MantisKanbanPlugin extends MantisPlugin {
     function register() {
-        $this->name = plugin_lang_get( 'kanban_name' );    
-        $this->description = plugin_lang_get( 'kanban_desc' );    
+        $this->name = 'Mantis Kanban';    # Proper name of plugin
+        $this->description = 'A Kanban board view';    # Short description of the plugin
 
-        $this->version = '2.2.1';     
-        $this->requires = array(    
-            'MantisCore' => '2.0.0', 
+        $this->version = '2.2.2';     # Plugin version string
+        $this->requires = array(    # Plugin dependencies, array of basename => version pairs
+            'MantisCore' => '2.0.0',  #   Should always depend on an appropriate version of MantisBT
             );
-
-        $this->author = 'Joanna Chlasta/Cas Nuy';         
-        $this->contact = '';        
-        $this->page = 'config';           
+        $this->author = 'Joanna Chlasta/Cas Nuy';         # Author/team name
+        $this->contact = 'cas@nuy.info';        # Author/team e-mail address
+        $this->page = 'config';            # configuration
+		$this->url		= 'https://github.com/mantisbt-plugins/MantisKanban/tree/MantisBT2.x';
     }
- 	function config() {
+	
+	 	function config() {
 		return array(
-			'show_empty'		=> ON,
+			'show_empty'		=> OFF,
 			'combined'			=> ON,
 			);
 	}
-	
+	    
 	function hooks( ) {
 		$hooks = array(
 			'EVENT_MENU_MAIN' => 'main_menu'
 		);
-		return $hooks;	}
+		return $hooks;
+	}
     
 	
 	function main_menu( ) {
@@ -39,7 +41,7 @@ class MantisKanbanPlugin extends MantisPlugin {
 	}	
 
 	function schema() {
-		# version 1.00
+		# version 2.2.1
 		$schema[] = array( 'CreateTableSQL', array( plugin_table( 'kanbangroups' ), "
 						group_id			I       NOTNULL UNSIGNED AUTOINCREMENT PRIMARY,
 						group_title			C (50)  DEFAULT NULL,
@@ -48,4 +50,5 @@ class MantisKanbanPlugin extends MantisPlugin {
 						" ) );
 		return $schema;
 	}
+	
 }

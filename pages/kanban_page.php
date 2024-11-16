@@ -42,19 +42,51 @@ $f_page_number		= gpc_get_int( 'page_number', 1 );
 $t_per_page = config_get( 'my_view_bug_count' );
 $t_bug_count = null;
 $t_page_count = null;
-$query =  "select * from {plugin_MantisKanban_kanbangroups} order by order_id";
-	$result = db_query($query);
-	$columns=db_num_rows($result);
+
 $t_boxes = config_get( 'my_view_boxes' );
 asort ($t_boxes);
 reset ($t_boxes);
 
 $t_project_id = helper_get_current_project();
+$query =  "select * from {plugin_MantisKanban_kanbangroups} order by order_id";
+$result = db_query($query);
+$columns=db_num_rows($result);
 ?>
 <link rel="stylesheet" type="text/css" href="<?php echo plugin_file( 'kanban.css' ); ?>"/>
 <div id="kanbanPage">
 	<h1><?php echo plugin_lang_get('kanban_title') ?></h1>
-<table  border="0" cellspacing="0" cellpadding="0" style="width: <?php echo $columns*250; ?>px">
+	
+<form action="<?php echo plugin_page( 'config_edit2' ) ?>" method="post">
+</table>
+<table  border="1" cellspacing="0" cellpadding="0" style="width: <?php echo $columns*250; ?>px">
+<tr >
+<td class="category" >
+<?php echo lang_get( 'show_empty' )?>
+</td>
+<td class="center" >
+<label><input type="radio" name='show_empty' value="1" <?php echo( ON == plugin_config_get( 'show_empty' ) ) ? 'checked="checked" ' : ''?>/>
+<?php echo lang_get( 'enabled' )?></label>
+
+<label><input type="radio" name='show_empty' value="0" <?php echo( OFF == plugin_config_get( 'show_empty' ) )? 'checked="checked" ' : ''?>/>
+<?php echo lang_get( 'disabled' )?></label>
+</td>
+
+<td class="category" >
+<?php echo lang_get( 'combined' )?>
+</td>
+<td class="center" >
+<label><input type="radio" name='combined' value="1" <?php echo( ON == plugin_config_get( 'combined' ) ) ? 'checked="checked" ' : ''?>/>
+<?php echo lang_get( 'enabled' )?></label>
+
+<label><input type="radio" name='combined' value="0" <?php echo( OFF == plugin_config_get( 'combined' ) )? 'checked="checked" ' : ''?>/>
+<?php echo lang_get( 'disabled' )?></label>
+</td>
+<td>
+<input type="submit" class="btn btn-primary btn-white btn-round" value="<?php echo lang_get( 'update' )?>" />
+</td>
+</tr> 
+</form>
+
 <tr>
 <?php
 $t_per_page = -1;
@@ -92,7 +124,7 @@ if ( !$t_combined ) {
 			?><td><?php 
 	
 			$filter_array = array(
-            'status' => $row['group_status'],
+             'status' => explode(",", $row['group_status']),
              '_view_type' => 'advanced',
             'priority' => $t_filter['priority'],
             'handler_id' => $t_filter['handler_id'],
@@ -176,13 +208,13 @@ if ( !$t_combined ) {
     </tr>
 	<?php	
 	
-		$result = db_query($query);
+	// $result = db_query($query);
 	while ($row = db_fetch_array($result)) {
 		$t_per_page = -1;
 		$title = $row['group_title'];
 		?><td><?php 
-	
-	/*	$filter_array = array(
+	/*
+		$filter_array = array(
             'status' => $row['group_status'],
             '_view_type' => 'advanced',
             'priority' => $t_filter['priority'],
@@ -196,10 +228,11 @@ if ( !$t_combined ) {
             'priority' => $t_filter['priority'],
             'handler_id' => $t_filter['handler_id'],
        		 );
-		
-		$rows = filter_get_bug_rows( $f_page_number, $t_per_page, $t_page_count, $t_bug_count,$filter_array );
-        $t_rowcounts[$title] = count($rows);
 	
+		$rows = filter_get_bug_rows( $f_page_number, $t_per_page, $t_page_count, $t_bug_count,$filter_array );
+		// $rows = filter_get_bug_rows( $f_page_number, $t_per_page, $t_page_count, $t_bug_count, $filter_array, null, null, true );
+
+ $t_rowcounts[$title] = count($rows);
 
 		if ( $t_show_empty ) {
 			echo '<h2>'. $title .' ('. $t_bug_count .')</h2>';
@@ -259,7 +292,7 @@ if ( !$t_combined ) {
 				if( VS_PRIVATE == $t_bug->view_state ) {
 					echo '<img src="fa-lock" width="8" height="15" alt="' . lang_get( 'private' ) . '" />';
 				}
-			
+				
 				echo '</div>';
 				echo '</div>';
 			
