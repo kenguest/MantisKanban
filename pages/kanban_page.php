@@ -19,6 +19,11 @@ require_api( 'bug_api.php' );
 require_api( 'string_api.php' );
 require_api( 'date_api.php' );
 
+function gravatarUrl($email) {
+    $emailHash = hash('sha256',(strtolower(trim($email))));
+    return MantisKanbanPlugin::GRAVATAR_URL . '/avatar/'. $emailHash .'?s=28&d=mm";
+}
+
 auth_ensure_user_authenticated();
 $t_current_user_id = auth_get_current_user_id();
 
@@ -152,9 +157,8 @@ if ( !$t_combined ) {
 			
 					// print username instead of status
 					if(( ON == config_get( 'show_assigned_names' ) ) && ( $t_bug->handler_id > 0 ) && ( access_has_project_level( config_get( 'view_handler_threshold' ), $t_bug->project_id ) ) ) {
-						$emailHash = md5( strtolower( trim( user_get_email($t_bug->handler_id) ) ) );
 						echo '<div class="owner">';
-						echo '<img src="http://www.gravatar.com/avatar/'. $emailHash .'?s=28&d=mm" />'; 
+						echo '<img src="' . gravatarUrl(user_get_email($t_bug->handler_id)) . '"/>';
 						echo prepare_user_name( $t_bug->handler_id );
 						echo '</div>';
 					}
@@ -253,9 +257,8 @@ if ( !$t_combined ) {
 			
 				// print username instead of status
 				if(( ON == config_get( 'show_assigned_names' ) ) && ( $t_bug->handler_id > 0 ) && ( access_has_project_level( config_get( 'view_handler_threshold' ), $t_bug->project_id ) ) ) {
-					$emailHash = md5( strtolower( trim( user_get_email($t_bug->handler_id) ) ) );
 					echo '<div class="owner">';
-					echo '<img src="http://www.gravatar.com/avatar/'. $emailHash .'?s=28&d=mm" />'; 
+					echo '<img src="' . gravatarUrl(user_get_email($t_bug->handler_id)) . '"/>';
 					echo prepare_user_name( $t_bug->handler_id );
 					echo '</div>';
 				}

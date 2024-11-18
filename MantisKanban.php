@@ -1,6 +1,8 @@
 <?php
 
 class MantisKanbanPlugin extends MantisPlugin {
+	const GRAVATAR_URL = 'https://secure.gravatar.com/';
+
     function register() {
         $this->name = 'Mantis Kanban';    # Proper name of plugin
         $this->description = 'A Kanban board view';    # Short description of the plugin
@@ -24,9 +26,14 @@ class MantisKanbanPlugin extends MantisPlugin {
 	    
 	function hooks( ) {
 		$hooks = array(
+			'EVENT_CORE_HEADERS' => 'csp_headers',
 			'EVENT_MENU_MAIN' => 'main_menu'
 		);
 		return $hooks;
+	}
+
+	function csp_headers() {
+		http_csp_add( 'img-src', self::GRAVATAR_URL );
 	}
     
 	
