@@ -158,7 +158,9 @@ if ( !$t_combined ) {
 					// print username instead of status
 					if(( ON == config_get( 'show_assigned_names' ) ) && ( $t_bug->handler_id > 0 ) && ( access_has_project_level( config_get( 'view_handler_threshold' ), $t_bug->project_id ) ) ) {
 						echo '<div class="owner">';
-						echo '<img src="' . gravatarUrl(user_get_email($t_bug->handler_id)) . '"/>';
+						if ( ON == config_get( 'show_avatar') ) {
+							echo '<img src="' . gravatarUrl(user_get_email($t_bug->handler_id)) . '"/>';
+						}
 						echo prepare_user_name( $t_bug->handler_id );
 						echo '</div>';
 					}
@@ -258,7 +260,9 @@ if ( !$t_combined ) {
 				// print username instead of status
 				if(( ON == config_get( 'show_assigned_names' ) ) && ( $t_bug->handler_id > 0 ) && ( access_has_project_level( config_get( 'view_handler_threshold' ), $t_bug->project_id ) ) ) {
 					echo '<div class="owner">';
-					echo '<img src="' . gravatarUrl(user_get_email($t_bug->handler_id)) . '"/>';
+					if ( ON == config_get( 'show_avatar') ) {
+						echo '<img src="' . gravatarUrl(user_get_email($t_bug->handler_id)) . '"/>';
+					}
 					echo prepare_user_name( $t_bug->handler_id );
 					echo '</div>';
 				}
