@@ -21,7 +21,7 @@ require_api( 'date_api.php' );
 
 function gravatarUrl($email) {
     $emailHash = hash('sha256',(strtolower(trim($email))));
-    return MantisKanbanPlugin::GRAVATAR_URL . '/avatar/'. $emailHash .'?s=28&d=mm";
+    return MantisKanbanPlugin::GRAVATAR_URL . '/avatar/'. $emailHash .'?s=28&d=mm';
 }
 
 auth_ensure_user_authenticated();
